@@ -18,11 +18,9 @@
   video {
     display: block;
     width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: contain;
+    height: auto;
     background: #111;
   }
-
   .overlay-btn {
     position: absolute;
     background: rgba(0,0,0,0.45);
@@ -37,18 +35,12 @@
     pointer-events: none;
     transition: opacity 0.4s ease;
   }
-  .overlay-btn.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  .overlay-btn.visible { opacity: 1; pointer-events: auto; }
   .overlay-btn svg { width: 18px; height: 18px; }
-
   .btn-cita  { bottom: 22%; left: 50%; transform: translateX(-50%); }
   .btn-maps  { bottom: 35%; left: 6%; }
   .btn-phone { bottom: 35%; right: 6%; }
   .btn-vcf   { bottom: 22%; right: 6%; }
-
-  /* Botón replay */
   .btn-replay {
     position: absolute;
     top: 50%; left: 50%;
@@ -59,16 +51,11 @@
     width: 60px; height: 60px;
     display: flex; align-items: center; justify-content: center;
     cursor: pointer;
-    opacity: 0;
-    pointer-events: none;
+    opacity: 0; pointer-events: none;
     transition: opacity 0.4s ease;
   }
-  .btn-replay.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  .btn-replay.visible { opacity: 1; pointer-events: auto; }
   .btn-replay svg { width: 28px; height: 28px; color: #fff; margin-left: 4px; }
-
   .action-bar {
     width: 100%; max-width: 430px;
     display: grid; grid-template-columns: repeat(4, 1fr);
@@ -79,14 +66,10 @@
     gap: 5px; padding: 14px 4px; text-decoration: none;
     color: #aaa; font-size: 11px; font-weight: 500;
     border-right: 1px solid #222;
-    opacity: 0;
-    pointer-events: none;
+    opacity: 0; pointer-events: none;
     transition: opacity 0.4s ease;
   }
-  .action-btn.visible {
-    opacity: 1;
-    pointer-events: auto;
-  }
+  .action-btn.visible { opacity: 1; pointer-events: auto; }
   .action-btn:last-child { border-right: none; }
   .action-btn svg { width: 26px; height: 26px; }
   .action-btn.cita  svg { color: #e8453c; }
@@ -117,9 +100,7 @@
   </a>
 
   <button class="btn-replay" id="btnReplay" onclick="replay()">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polygon points="5 3 19 12 5 21 5 3"/>
-    </svg>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
   </button>
 </div>
 
@@ -152,16 +133,13 @@
     overlayBtns.forEach(b => b.classList.add('visible'));
     actionBtns.forEach(b => b.classList.add('visible'));
   }
-
   function hideButtons() {
     overlayBtns.forEach(b => b.classList.remove('visible'));
     actionBtns.forEach(b => b.classList.remove('visible'));
   }
 
   vid.addEventListener('timeupdate', () => {
-    if (vid.currentTime >= 4) {
-      showButtons();
-    }
+    if (vid.currentTime >= 4) showButtons();
   });
 
   vid.addEventListener('ended', () => {
