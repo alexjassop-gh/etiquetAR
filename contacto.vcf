@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:3.0
+FN:Nombre del Negocio
+TEL;TYPE=CELL:+521234567890
+EMAIL:correo@ejemplo.com
+URL:https://alexjassop-gh.github.io/etiquetAR/
+ADR:;;Calle Ejemplo 123;Torreón;Coahuila;27000;México
+END:VCARD
