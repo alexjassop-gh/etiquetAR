@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Dr. Alejandro Silva</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+* { margin:0; padding:0; box-sizing:border-box; }
+html, body { height:100%; overflow:hidden; background:#000; font-family:'Inter',Arial,sans-serif; }
+
+#camBg {
+  position: fixed; inset: 0;
+  width:100%; height:100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* videos al 100% opacidad, blend mode screen */
+#vid-holo, #vid-unfold {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 92%;
+  max-width: 400px;
+  z-index: 1;
+  mix-blend-mode: screen;
+  opacity: 1;
+  transition: opacity 0.4s;
+}
+#vid-holo   { bottom: 26vh; }
+#vid-unfold { bottom: 26vh; opacity: 0; pointer-events: none; }
+
+/* ── ICONOS flotantes pegados al video ── */
+.icon-row {
+  position: fixed;
+  bottom: 22vh;
+  left: 0; right: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 0 40px;
+  z-index: 5;
+}
+
+.icon-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.icon-circle {
+  width: 48px; height: 48px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  /* sin fondo — solo borde sutil */
+  background: transparent;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  backdrop-filter: blur(2px);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  transition: transform 0.15s, border-color 0.15s;
+}
+.icon-btn:active .icon-circle {
+  transform: scale(0.9);
+  border-color: rgba(255,255,255,0.8);
+}
+
+/* ── PANEL INFERIOR solo countdown ── */
+.panel {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 20vh;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 8px 20px 12px;
+  /* sin fondo — transparente */
+}
+
+.cd-label {
+  font-size: 10px; font-weight: 700;
+  color: #fff;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9), 0 0 8px rgba(0,0,0,0.8);
+}
+
+.cd-time {
+  font-size: 30px; font-weight: 800;
+  color: #fff;
+  letter-spacing: 3px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  text-shadow:
+    0 0 0 1px rgba(0,0,0,0.9),
+    0 2px 6px rgba(0,0,0,1),
+    0 0 16px rgba(0,100,255,0.5);
+  -webkit-text-stroke: 1px rgba(0,0,0,0.8);
+}
+.cd-time.urgent {
+  color: #ff3333;
+  animation: blink .8s infinite;
+  text-shadow: 0 0 12px rgba(255,0,0,0.6), 0 2px 6px #000;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.5} }
+
+.cd-sub {
+  font-size: 10px; color: #fff;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  font-weight: 600;
+}
+.cd-sub.hot { color: #ff8844; }
+
+/* ── PROGRESS RING ── */
+.ring-wrap {
+  position: relative;
+  width: 80px; height: 80px;
+  display: flex; align-items: center; justify-content: center;
+}
+.ring-wrap svg {
+  position: absolute; inset: 0;
+  transform: rotate(-90deg);
+}
+.ring-bg {
+  fill: none;
+  stroke: rgba(255,255,255,0.15);
+  stroke-width: 3;
+}
+.ring-progress {
+  fill: none;
+  stroke: #00bfff;
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1s linear;
+}
+.ring-time {
+  font-size: 13px; font-weight: 800;
+  color: #fff; text-align: center;
+  line-height: 1.2;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  font-variant-numeric: tabular-nums;
+  z-index: 1;
+}
+.ring-time small {
+  display: block; font-size: 8px;
+  font-weight: 600; color: rgba(255,255,255,0.6);
+  letter-spacing: 1px; text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+
+<video id="camBg" autoplay playsinline muted></video>
+
+<video id="vid-holo"
+  src="https://raw.githubusercontent.com/alexjassop-gh/AR/main/1%20label%20girando.mp4"
+  autoplay loop muted playsinline preload="auto">
+</video>
+<video id="vid-unfold"
+  src="https://raw.githubusercontent.com/alexjassop-gh/AR/main/2%20label%20unfolds%20fondo%20negro.mp4"
+  muted playsinline preload="auto">
+</video>
+
+<!-- ICONOS sin fondo, pegados al video -->
+<div class="icon-row">
+  <a class="icon-btn" href="https://wa.me/528712345528?text=Hola%20Dr.%20Silva,%20vi%20su%20promoción%20de%20consulta%20gratis">
+    <div class="icon-circle">📞</div>
+  </a>
+  <a class="icon-btn" href="https://calendly.com" target="_blank">
+    <div class="icon-circle">📅</div>
+  </a>
+  <a class="icon-btn" href="https://maps.google.com/?q=Torreón,Coahuila,Mexico" target="_blank">
+    <div class="icon-circle">📍</div>
+  </a>
+</div>
+
+<!-- COUNTDOWN con ring -->
+<div class="panel">
+  <div class="ring-wrap">
+    <svg viewBox="0 0 80 80" width="80" height="80">
+      <circle class="ring-bg" cx="40" cy="40" r="36"/>
+      <circle class="ring-progress" id="ringProgress" cx="40" cy="40" r="36"
+        stroke-dasharray="226.2"
+        stroke-dashoffset="0"/>
+    </svg>
+    <div class="ring-time" id="ringTime">
+      02:00:00<br><small>⏰ oferta</small>
+    </div>
+  </div>
+  <div class="cd-sub" id="cdSub">¡Agenda antes de que expire!</div>
+</div>
+
+<script>
+// ── CÁMARA ──
+navigator.mediaDevices.getUserMedia({ video:{ facingMode:'environment' }, audio:false })
+  .then(s => document.getElementById('camBg').srcObject = s)
+  .catch(() => {});
+
+// ── TRANSICIÓN AUTO ~6s ──
+const vh = document.getElementById('vid-holo');
+const vu = document.getElementById('vid-unfold');
+let done = false;
+function transition() {
+  if (done) return; done = true;
+  vh.style.opacity = '0';
+  setTimeout(() => { vh.pause(); vu.style.opacity='1'; vu.currentTime=0; vu.play(); }, 400);
+}
+vh.addEventListener('canplay', () => setTimeout(transition, 6000), { once:true });
+setTimeout(transition, 7500);
+
+// ── COUNTDOWN + RING ──
+const TOTAL = 2 * 60 * 60 * 1000; // 2 horas en ms
+const end   = Date.now() + TOTAL;
+const CIRC  = 2 * Math.PI * 36; // 226.2
+const pad   = n => String(n).padStart(2,'0');
+const ring  = document.getElementById('ringProgress');
+const ringT = document.getElementById('ringTime');
+const cdSub = document.getElementById('cdSub');
+
+function tick() {
+  const r = Math.max(0, end - Date.now());
+  const h = Math.floor(r / 3600000);
+  const m = Math.floor((r % 3600000) / 60000);
+  const s = Math.floor((r % 60000) / 1000);
+  const timeStr = `${pad(h)}:${pad(m)}:${pad(s)}`;
+
+  // ring retrocede
+  const pct = r / TOTAL;
+  ring.style.strokeDashoffset = CIRC * (1 - pct);
+  ring.style.stroke = r < 600000 ? '#ff3333' : '#00bfff';
+
+  ringT.innerHTML = `${timeStr}<br><small>⏰ oferta</small>`;
+
+  if (r <= 0) {
+    cdSub.textContent = '⚠️ Oferta expirada';
+    return;
+  }
+  if (r < 600000) {
+    cdSub.textContent = '🔴 ¡Menos de 10 min! Agenda ya';
+    cdSub.classList.add('hot');
+  }
+  setTimeout(tick, 1000);
+}
+tick();
+</script>
+</body>
+</html>
